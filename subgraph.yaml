@@ -1,0 +1,53 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: SPA_USDs_Dynamic_Farm
+    network: arbitrum-one
+    source:
+      address: "0x84f7F3246fD8beAAc8Af4aB08a2161506Cb97174"
+      abi: SPA_USDs_Dynamic_Farm
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - CooldownInitiated
+        - CooldownPeriodUpdated
+        - DepositPaused
+        - DepositWithdrawn
+        - Deposited
+        - EmergencyClaim
+        - FundsRecovered
+        - OwnershipTransferred
+        - PoolUnsubscribed
+        - RewardRateUpdated
+        - RewardsClaimed
+      abis:
+        - name: SPA_USDs_Dynamic_Farm
+          file: ./abis/SPA_USDs_Dynamic_Farm.json
+      eventHandlers:
+        - event: CooldownInitiated(indexed address,uint256,uint256)
+          handler: handleCooldownInitiated
+        - event: CooldownPeriodUpdated(uint256,uint256)
+          handler: handleCooldownPeriodUpdated
+        - event: DepositPaused(bool)
+          handler: handleDepositPaused
+        - event: DepositWithdrawn(indexed address,uint256,uint256,uint256,uint256,uint256)
+          handler: handleDepositWithdrawn
+        - event: Deposited(indexed address,bool,uint256,uint256)
+          handler: handleDeposited
+        - event: EmergencyClaim(indexed address)
+          handler: handleEmergencyClaim
+        - event: FundsRecovered(indexed address,uint256)
+          handler: handleFundsRecovered
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: PoolUnsubscribed(indexed address,uint256,uint8,uint256,uint256,uint256)
+          handler: handlePoolUnsubscribed
+        - event: RewardRateUpdated(uint8,uint256,uint256)
+          handler: handleRewardRateUpdated
+        - event: RewardsClaimed(indexed address,uint8,uint256,uint256,uint256,uint256)
+          handler: handleRewardsClaimed
+      file: ./src/mapping.ts

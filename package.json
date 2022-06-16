@@ -1,0 +1,16 @@
+{
+  "name": "SPA_USDs_Dynamic_Farm",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ sperax/SPA_USDs_Dynamic_Farm",
+    "create-local": "graph create --node http://localhost:8020/ sperax/SPA_USDs_Dynamic_Farm",
+    "remove-local": "graph remove --node http://localhost:8020/ sperax/SPA_USDs_Dynamic_Farm",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 sperax/SPA_USDs_Dynamic_Farm"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.26.0",
+    "@graphprotocol/graph-ts": "0.24.1"
+  }
+}
