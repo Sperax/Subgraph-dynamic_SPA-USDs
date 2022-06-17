@@ -1,6 +1,6 @@
 specVersion: 0.0.2
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum
     name: SPA_USDs_Dynamic_Farm
@@ -27,7 +27,7 @@ dataSources:
         - RewardsClaimed
       abis:
         - name: SPA_USDs_Dynamic_Farm
-          file: ./abis/SPA_USDs_Dynamic_Farm.json
+          file: SPA_USDs_Dynamic_Farm/abis/SPA_USDs_Dynamic_Farm.json
       eventHandlers:
         - event: CooldownInitiated(indexed address,uint256,uint256)
           handler: handleCooldownInitiated
@@ -51,28 +51,27 @@ dataSources:
           handler: handleRewardRateUpdated
         - event: RewardsClaimed(indexed address,uint8,uint256,uint256,uint256,uint256)
           handler: handleRewardsClaimed
-      file: ./src/SPA_USDs_Dynamic_Farm.ts
+      file: SPA_USDs_Dynamic_Farm/SPA_USDs_Dynamic_Farm.wasm
   - kind: ethereum
     name: NonFungiblePositionManager
     network: arbitrum-one
     source:
-        address: "0xc36442b4a4522e871399cd717abdd847ab11fe88"
-        abi: NonFungiblePositionManager
-        startBlock: 14515692
+      address: "0xc36442b4a4522e871399cd717abdd847ab11fe88"
+      abi: NonFungiblePositionManager
+      startBlock: 14515692
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
-      file: ./src/NonFungiblePositionManagerMapping.ts
+      file: NonFungiblePositionManager/NonFungiblePositionManager.wasm
       entities:
         - Collect
         - DecreaseLiquidity
         - IncreaseLiquidity
       abis:
         - name: NonFungiblePositionManager
-          file: ./abis/NonFungiblePositionManager.json
+          file: NonFungiblePositionManager/abis/NonFungiblePositionManager.json
       eventHandlers:
-
         - event: Collect(indexed uint256,address,uint256,uint256)
           handler: handleCollect
         - event: DecreaseLiquidity(indexed uint256,uint128,uint256,uint256)
