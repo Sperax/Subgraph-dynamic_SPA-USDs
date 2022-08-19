@@ -1,4 +1,4 @@
-import { BigInt, BigDecimal } from "@graphprotocol/graph-ts";
+import { BigInt, BigDecimal,log } from "@graphprotocol/graph-ts";
 import {
   NonFungiblePositionManager,
 
@@ -8,33 +8,104 @@ import {
 
 } from "../generated/NonFungiblePositionManager/NonFungiblePositionManager";
 import {
-  uniswapV3TokenLiquidity,
+  spausds3uniswapV3TokenLiquidity,
+  spausds3uniswapV3TokenCollected,
+  spausds3uniswapV3TokenRemoved,
+  usdsusdc3uniswapV3TokenLiquidity,
+  usdsusdc3uniswapV3TokenCollected,
+  usdsusdc3uniswapV3TokenRemoved
 } from "../generated/schema";
-import { timestampConvertDateTime, digitsConvert } from "../src/utils/utils";
+import { timestampConvertDateTime, digitsConvert, collateralConvert } from "../src/utils/utils";
 
 export function handleCollect(event: Collect): void {
+  let collectspausds3 = new spausds3uniswapV3TokenCollected(
+    event.params.tokenId.toString()
+  );
+  let collectusdsusdc3 = new usdsusdc3uniswapV3TokenCollected(
+    event.params.tokenId.toString()
+  );
+  collectspausds3.tokenId=event.params.tokenId.toString()
+  collectspausds3.recipient=event.params.recipient
+  collectspausds3.SPA = digitsConvert(event.params.amount0)
+
+  collectspausds3.USDs= digitsConvert(event.params.amount1)
+
+  collectusdsusdc3.tokenId=event.params.tokenId.toString()
+  collectusdsusdc3.recipient=event.params.recipient
+  collectusdsusdc3.USDs= digitsConvert(event.params.amount0)
+  collectusdsusdc3.USDC = collateralConvert(event.params.amount1)
+
+  let contract = NonFungiblePositionManager.bind(event.address);
+  let lpPosition = contract.try_positions(event.params.tokenId);
+  if (lpPosition.reverted) {
+    log.info("position reverted", []);
+  } else {
+    collectspausds3.fee = BigInt.fromI32( lpPosition.value.value4)
+    collectusdsusdc3.fee = BigInt.fromI32( lpPosition.value.value4)
+  }
+
+
+  collectspausds3.save()
+  collectusdsusdc3.save()
+
 
 
 }
 
 export function handleDecreaseLiquidity(event: DecreaseLiquidity): void {
-  
-}
-
-export function handleIncreaseLiquidity(event: IncreaseLiquidity): void {
-  let increase = new uniswapV3TokenLiquidity(
+  let decreasespausds3 = new spausds3uniswapV3TokenRemoved(
     event.params.tokenId.toString()
   );
+  let decreaseusdsusdc3 = new usdsusdc3uniswapV3TokenRemoved(
+    event.params.tokenId.toString()
+  );
+  decreasespausds3.tokenId=event.params.tokenId.toString()
+  decreasespausds3.liquidity=digitsConvert(event.params.liquidity)
+  decreasespausds3.SPA = digitsConvert(event.params.amount0)
+  decreasespausds3.USDs= digitsConvert(event.params.amount1)
 
-   increase.tokenId=event.params.tokenId.toString()
-  increase.liquidity=digitsConvert(event.params.liquidity)
+  decreaseusdsusdc3.tokenId=event.params.tokenId.toString()
+  decreaseusdsusdc3.USDs= digitsConvert(event.params.amount0)
+  decreaseusdsusdc3.USDC = collateralConvert(event.params.amount1)
+
+ let contract = NonFungiblePositionManager.bind(event.address);
+ let lpPosition = contract.try_positions(event.params.tokenId);
+ if (lpPosition.reverted) {
+   log.info("position reverted", []);
+ } else {
+  decreasespausds3.fee = BigInt.fromI32( lpPosition.value.value4)
+  decreaseusdsusdc3.fee = BigInt.fromI32( lpPosition.value.value4)
+     
+ }
   
-  increase.SPA = digitsConvert(event.params.amount0)
+ decreasespausds3.save()
+ decreaseusdsusdc3.save()
+  }
+export function handleIncreaseLiquidity(event: IncreaseLiquidity): void {
+  let increasespausds3 = new spausds3uniswapV3TokenLiquidity(
+    event.params.tokenId.toString()
+  );
+  let increaseusdsusdc3 = new usdsusdc3uniswapV3TokenLiquidity(
+    event.params.tokenId.toString()
+  );
+  increasespausds3.tokenId=event.params.tokenId.toString()
+  increasespausds3.liquidity=digitsConvert(event.params.liquidity)
+  increasespausds3.SPA = digitsConvert(event.params.amount0)
+  increasespausds3.USDs= digitsConvert(event.params.amount1)
 
-  increase.USDs= digitsConvert(event.params.amount1)
-
- ;
+  increaseusdsusdc3.tokenId=event.params.tokenId.toString()
+  increaseusdsusdc3.liquidity=digitsConvert(event.params.liquidity)
+  increaseusdsusdc3.USDC = digitsConvert(event.params.amount0)
+  increaseusdsusdc3.USDs= digitsConvert(event.params.amount1)
   
-  increase.save()
+ let contract = NonFungiblePositionManager.bind(event.address);
+ let lpPosition = contract.try_positions(event.params.tokenId);
+ if (lpPosition.reverted) {
+   log.info("position reverted", []);
+ } else {
+  increasespausds3.fee = BigInt.fromI32( lpPosition.value.value4)
+  increaseusdsusdc3.fee = BigInt.fromI32( lpPosition.value.value4)
+ }
+ increasespausds3.save()
+ increaseusdsusdc3.save()
 }
-

@@ -1,7 +1,8 @@
-type deposit @entity {
+#-----------------------SPA-USDS-DYNAMIC-FARM-3RD-LAUNCH------------------------------------------------------
+type spausds3deposit @entity {
   id: ID!
   account: Bytes! # address
-  liquidity: uniswapV3TokenLiquidity
+  liquidity: spausds3uniswapV3TokenLiquidity
   amount: BigDecimal! # uint256
   tokenId: BigInt! # uint256
   locked: Boolean! # uint256
@@ -12,10 +13,12 @@ type deposit @entity {
   blockNumber: BigInt!
   transactionHash: Bytes!
 }
-type withdraw @entity {
+type spausds3withdraw @entity {
   id: ID!
   account: Bytes!
   tokenId: BigInt!
+  collected: spausds3uniswapV3TokenCollected
+  removed: spausds3uniswapV3TokenRemoved
   startTimeUnix: BigInt!
   startTime: String!
   endTimeUnix: BigInt!
@@ -29,7 +32,40 @@ type withdraw @entity {
   blockNumber: BigInt!
   transactionHash: Bytes!
 }
-type InititateCooldown @entity {
+type spausds3uniqueDeposit @entity {
+  id: ID!
+  account: Bytes! # address
+  liquidity: spausds3uniswapV3TokenLiquidity
+  amount: BigDecimal! # uint256
+  tokenId: BigInt! # uint256
+  locked: Boolean! # uint256
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type spausds3uniqueWithdraw @entity {
+  id: ID!
+  account: Bytes!
+  tokenId: BigInt!
+  collected: spausds3uniswapV3TokenCollected
+  removed: spausds3uniswapV3TokenRemoved
+  startTimeUnix: BigInt!
+  startTime: String!
+  endTimeUnix: BigInt!
+  endTime: String!
+  totalRewardsClaimed: BigDecimal!
+  liquidity: BigDecimal!
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type spausds3InititateCooldown @entity {
   id: ID!
   account: Bytes! # address
   expiryDateUnix: String!
@@ -42,7 +78,7 @@ type InititateCooldown @entity {
   blockNumber: BigInt!
   transactionHash: Bytes!
 }
-type PeriodCoolDownUpdate @entity {
+type spausds3PeriodCoolDownUpdate @entity {
   id: ID!
   oldPeriod: BigInt!
   newPeriod: BigInt!
@@ -53,7 +89,7 @@ type PeriodCoolDownUpdate @entity {
   blockNumber: BigInt!
   transactionHash: Bytes!
 }
-type DepositPause @entity {
+type spausds3DepositPause @entity {
   id: ID!
   paused: Boolean!
   gasPrice: BigInt!
@@ -63,7 +99,7 @@ type DepositPause @entity {
   blockNumber: BigInt!
   transactionHash: Bytes!
 }
-type ClaimReward @entity {
+type spausds3ClaimReward @entity {
   id: ID!
   account: Bytes!
   rewardAmount: BigDecimal!
@@ -78,7 +114,7 @@ type ClaimReward @entity {
   blockNumber: BigInt!
   transactionHash: Bytes!
 }
-type unsubscribePool @entity {
+type spausds3unsubscribePool @entity {
   id: ID!
   account: Bytes!
   depositId: BigInt!
@@ -95,7 +131,152 @@ type unsubscribePool @entity {
   blockNumber: BigInt!
   transactionHash: Bytes!
 }
-type RewardRateUpdate @entity {
+type spausds3RewardRateUpdate @entity {
+  id: ID!
+  fundId: BigInt!
+  oldRewardRate: BigDecimal!
+  newRewardRate: BigDecimal!
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+#-----------------------USDS-USDC-DYNAMIC-FARM-3RD-LAUNCH------------------------------------------------------
+type usdsusdc3deposit @entity {
+  id: ID!
+  account: Bytes! # address
+  liquidity: usdsusdc3uniswapV3TokenLiquidity
+  amount: BigDecimal! # uint256
+  tokenId: BigInt! # uint256
+  locked: Boolean! # uint256
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type usdsusdc3withdraw @entity {
+  id: ID!
+  account: Bytes!
+  tokenId: BigInt!
+  collected: usdsusdc3uniswapV3TokenCollected
+  removed: usdsusdc3uniswapV3TokenRemoved
+  startTimeUnix: BigInt!
+  startTime: String!
+  endTimeUnix: BigInt!
+  endTime: String!
+  totalRewardsClaimed: BigDecimal!
+  liquidity: BigDecimal!
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type usdsusdc3uniqueDeposit @entity {
+  id: ID!
+  account: Bytes! # address
+  liquidity: usdsusdc3uniswapV3TokenLiquidity
+  amount: BigDecimal! # uint256
+  tokenId: BigInt! # uint256
+  locked: Boolean! # uint256
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type usdsusdc3uniqueWithdraw @entity {
+  id: ID!
+  account: Bytes!
+  tokenId: BigInt!
+  collected: usdsusdc3uniswapV3TokenCollected
+  removed: usdsusdc3uniswapV3TokenRemoved
+  startTimeUnix: BigInt!
+  startTime: String!
+  endTimeUnix: BigInt!
+  endTime: String!
+  totalRewardsClaimed: BigDecimal!
+  liquidity: BigDecimal!
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type usdsusdc3InititateCooldown @entity {
+  id: ID!
+  account: Bytes! # address
+  expiryDateUnix: String!
+  expiryDate: BigInt! # uint256
+  tokenId: BigInt! # uint256
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type usdsusdc3PeriodCoolDownUpdate @entity {
+  id: ID!
+  oldPeriod: BigInt!
+  newPeriod: BigInt!
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type usdsusdc3DepositPause @entity {
+  id: ID!
+  paused: Boolean!
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type usdsusdc3ClaimReward @entity {
+  id: ID!
+  account: Bytes!
+  rewardAmount: BigDecimal!
+  fundId: BigInt!
+  fundLiquidity: BigDecimal!
+  liquidity: BigDecimal!
+  tokenId: BigInt!
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type usdsusdc3unsubscribePool @entity {
+  id: ID!
+  account: Bytes!
+  depositId: BigInt!
+  totalRewardsClaimed: BigDecimal!
+  fundId: BigInt!
+  endTimeUnix: BigInt!
+  endTime: String!
+  startTimeUnix: BigInt!
+  startTime: String!
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type usdsusdc3RewardRateUpdate @entity {
   id: ID!
   fundId: BigInt!
   oldRewardRate: BigDecimal!
@@ -108,10 +289,52 @@ type RewardRateUpdate @entity {
   transactionHash: Bytes!
 }
 #-----------------------UNISWAP-V3-EVENTS---------------------------------------------------------
-type uniswapV3TokenLiquidity @entity {
+type spausds3uniswapV3TokenLiquidity @entity {
   id: ID!
   SPA: BigDecimal!
   USDs: BigDecimal!
   liquidity: BigDecimal!
   tokenId: String!
+  fee: BigInt!
+}
+type spausds3uniswapV3TokenCollected @entity {
+  id: ID!
+  SPA: BigDecimal!
+  recipient: Bytes!
+  USDs: BigDecimal!
+  tokenId: String!
+  fee: BigInt!
+}
+type spausds3uniswapV3TokenRemoved @entity {
+  id: ID!
+  SPA: BigDecimal!
+  USDs: BigDecimal!
+  liquidity: BigDecimal!
+  tokenId: String!
+  fee: BigInt!
+}
+#----------------------USDS-USDC-UNISWAP-V3-EVENTS---------------------------------------------------------
+type usdsusdc3uniswapV3TokenLiquidity @entity {
+  id: ID!
+  USDC: BigDecimal!
+  USDs: BigDecimal!
+  liquidity: BigDecimal!
+  tokenId: String!
+  fee: BigInt!
+}
+type usdsusdc3uniswapV3TokenCollected @entity {
+  id: ID!
+  USDC: BigDecimal!
+  recipient: Bytes!
+  USDs: BigDecimal!
+  tokenId: String!
+  fee: BigInt!
+}
+type usdsusdc3uniswapV3TokenRemoved @entity {
+  id: ID!
+  USDC: BigDecimal!
+  USDs: BigDecimal!
+  liquidity: BigDecimal!
+  tokenId: String!
+  fee: BigInt!
 }

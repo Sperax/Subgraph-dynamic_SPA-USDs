@@ -16,6 +16,41 @@ type withdraw @entity {
   id: ID!
   account: Bytes!
   tokenId: BigInt!
+  collected:uniswapV3TokenCollected
+  decreased:uniswapV3TokenDecreased
+  startTimeUnix: BigInt!
+  startTime: String!
+  endTimeUnix: BigInt!
+  endTime: String!
+  totalRewardsClaimed: BigDecimal!
+  liquidity: BigDecimal!
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type uniqueDeposit @entity {
+  id: ID!
+  account: Bytes! # address
+  liquidity: uniswapV3TokenLiquidity
+  amount: BigDecimal! # uint256
+  tokenId: BigInt! # uint256
+  locked: Boolean! # uint256
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type uniqueWithdraw @entity {
+  id: ID!
+  account: Bytes!
+  tokenId: BigInt!
+  collected:uniswapV3TokenCollected
+  decreased:uniswapV3TokenDecreased
   startTimeUnix: BigInt!
   startTime: String!
   endTimeUnix: BigInt!
@@ -114,4 +149,21 @@ type uniswapV3TokenLiquidity @entity {
   USDs: BigDecimal!
   liquidity: BigDecimal!
   tokenId: String!
+  fee:BigInt!
+}
+type uniswapV3TokenCollected @entity {
+  id: ID!
+  recipient:Bytes!
+  SPA: BigDecimal!
+  USDs: BigDecimal!
+  tokenId: String!
+  fee:BigInt!
+}
+type uniswapV3TokenDecreased @entity {
+  id: ID!
+  SPA: BigDecimal!
+  USDs: BigDecimal!
+  liquidity: BigDecimal!
+  tokenId: String!
+  fee:BigInt!
 }

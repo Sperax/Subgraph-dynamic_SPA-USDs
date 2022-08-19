@@ -1,6 +1,6 @@
 import { BigInt } from "@graphprotocol/graph-ts";
 import {
-  SPA_USDs_Dynamic_Farm,
+  USDs_USDC_Dynamic_Farm,
   CooldownInitiated,
   CooldownPeriodUpdated,
   DepositPaused,
@@ -12,39 +12,39 @@ import {
   PoolUnsubscribed,
   RewardRateUpdated,
   RewardsClaimed,
-} from "../generated/SPA_USDs_Dynamic_Farm/SPA_USDs_Dynamic_Farm";
+} from "../generated/USDs_USDC_Dynamic_Farm/USDs_USDC_Dynamic_Farm";
 import {
   timestampConvertDateTime,
   digitsConvert,
   timestampConvertDate,
-} from "../src/utils/utils";
+} from "./utils/utils";
 import {
-  spausds3uniswapV3TokenLiquidity,
-  spausds3uniswapV3TokenCollected,
-  spausds3uniswapV3TokenRemoved,
-  spausds3deposit,
-  spausds3InititateCooldown,
-  spausds3PeriodCoolDownUpdate,
-  spausds3DepositPause,
-  spausds3ClaimReward,
-  spausds3unsubscribePool,
-  spausds3RewardRateUpdate,
-  spausds3withdraw,
-  spausds3uniqueDeposit,
-  spausds3uniqueWithdraw,
+  usdsusdc3uniswapV3TokenLiquidity,
+  usdsusdc3uniswapV3TokenCollected,
+  usdsusdc3uniswapV3TokenRemoved,
+  usdsusdc3deposit,
+  usdsusdc3InititateCooldown,
+  usdsusdc3PeriodCoolDownUpdate,
+  usdsusdc3DepositPause,
+  usdsusdc3ClaimReward,
+  usdsusdc3unsubscribePool,
+  usdsusdc3RewardRateUpdate,
+  usdsusdc3withdraw,
+  usdsusdc3uniqueDeposit,
+  usdsusdc3uniqueWithdraw,
 } from "../generated/schema";
 
 export function handleDeposited(event: Deposited): void {
-  let entity = new spausds3deposit(
+  let entity = new usdsusdc3deposit(
     event.transaction.from
       .toHex()
       .concat("_")
       .concat(event.params.tokenId.toString())
   );
-  let liquidity = new spausds3uniswapV3TokenLiquidity(event.params.tokenId.toString());
+  let liquidity = new usdsusdc3uniswapV3TokenLiquidity(event.params.tokenId.toString());
   entity.liquidity = liquidity.id;
 
-  let unique = new spausds3uniqueDeposit(event.params.account.toString());
+  let unique = new usdsusdc3uniqueDeposit(event.params.account.toString());
 
   // Entity fields can be set based on event parameters
   entity.account = event.params.account;
@@ -112,7 +112,7 @@ export function handleDeposited(event: Deposited): void {
 }
 
 export function handleRewardsClaimed(event: RewardsClaimed): void {
-  let entity = new spausds3ClaimReward(
+  let entity = new usdsusdc3ClaimReward(
     event.transaction.from
       .toHex()
       .concat("_")
@@ -135,7 +135,7 @@ export function handleRewardsClaimed(event: RewardsClaimed): void {
   entity.save();
 }
 export function handleCooldownInitiated(event: CooldownInitiated): void {
-  let entity = new spausds3InititateCooldown(
+  let entity = new usdsusdc3InititateCooldown(
     event.transaction.from
       .toHex()
       .concat("_")
@@ -161,7 +161,7 @@ export function handleCooldownInitiated(event: CooldownInitiated): void {
 export function handleCooldownPeriodUpdated(
   event: CooldownPeriodUpdated
 ): void {
-  let entity = new spausds3PeriodCoolDownUpdate(
+  let entity = new usdsusdc3PeriodCoolDownUpdate(
     event.transaction.from
       .toHex()
       .concat("_")
@@ -180,7 +180,7 @@ export function handleCooldownPeriodUpdated(
 }
 
 export function handleDepositPaused(event: DepositPaused): void {
-  let entity = new spausds3DepositPause(event.transaction.from.toHex());
+  let entity = new usdsusdc3DepositPause(event.transaction.from.toHex());
   entity.paused = event.params.paused;
   entity.timeStamp = timestampConvertDateTime(event.block.timestamp);
   entity.timeStampUnix = event.block.timestamp;
@@ -191,16 +191,16 @@ export function handleDepositPaused(event: DepositPaused): void {
   entity.save();
 }
 export function handleDepositWithdrawn(event: DepositWithdrawn): void {
-  let entity = new spausds3withdraw(
+  let entity = new usdsusdc3withdraw(
     event.transaction.from
       .toHex()
       .concat("_")
       .concat(event.params.tokenId.toString())
   );
-  let collected = new spausds3uniswapV3TokenCollected(event.params.tokenId.toString());
+  let collected = new usdsusdc3uniswapV3TokenCollected(event.params.tokenId.toString());
   entity.collected = collected.id;
-  let decreased = new spausds3uniswapV3TokenRemoved(event.params.tokenId.toString());
-  let unique = new spausds3uniqueWithdraw(
+  let decreased = new usdsusdc3uniswapV3TokenRemoved(event.params.tokenId.toString());
+  let unique = new usdsusdc3uniqueWithdraw(
     event.transaction.from
       .toHex()
       .concat("_")
@@ -241,7 +241,7 @@ export function handleDepositWithdrawn(event: DepositWithdrawn): void {
 }
 
 export function handlePoolUnsubscribed(event: PoolUnsubscribed): void {
-  let entity = new spausds3unsubscribePool(event.transaction.from.toHex());
+  let entity = new usdsusdc3unsubscribePool(event.transaction.from.toHex());
   entity.account = event.params.account;
   entity.depositId = event.params.depositId;
   entity.startTimeUnix = event.params.startTime;
@@ -260,7 +260,7 @@ export function handlePoolUnsubscribed(event: PoolUnsubscribed): void {
 }
 
 export function handleRewardRateUpdated(event: RewardRateUpdated): void {
-  let entity = new spausds3RewardRateUpdate(event.transaction.from.toHex());
+  let entity = new usdsusdc3RewardRateUpdate(event.transaction.from.toHex());
   entity.fundId = BigInt.fromI32(event.params.fundId);
   entity.newRewardRate = digitsConvert(event.params.newRewardRate);
   entity.oldRewardRate = digitsConvert(event.params.oldRewardRate);
