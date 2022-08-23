@@ -53,6 +53,56 @@ dataSources:
           handler: handleRewardsClaimed
       file: SPA_USDs_Dynamic_Farm/SPA_USDs_Dynamic_Farm.wasm
   - kind: ethereum
+    name: USDs_USDC_Dynamic_Farm
+    network: arbitrum-one
+    source:
+      address: "0x7775Cd662ACF952101acE08a7144C8Bb7d5ef2bE"
+      abi: USDs_USDC_Dynamic_Farm
+      startBlock: 19293730
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - CooldownInitiated
+        - CooldownPeriodUpdated
+        - DepositPaused
+        - DepositWithdrawn
+        - Deposited
+        - EmergencyClaim
+        - FundsRecovered
+        - OwnershipTransferred
+        - PoolUnsubscribed
+        - RewardRateUpdated
+        - RewardsClaimed
+      abis:
+        - name: USDs_USDC_Dynamic_Farm
+          file: USDs_USDC_Dynamic_Farm/abis/USDs_USDC_Dynamic_Farm.json
+      eventHandlers:
+        - event: CooldownInitiated(indexed address,uint256,uint256)
+          handler: handleCooldownInitiated
+        - event: CooldownPeriodUpdated(uint256,uint256)
+          handler: handleCooldownPeriodUpdated
+        - event: DepositPaused(bool)
+          handler: handleDepositPaused
+        - event: DepositWithdrawn(indexed address,uint256,uint256,uint256,uint256,uint256)
+          handler: handleDepositWithdrawn
+        - event: Deposited(indexed address,bool,uint256,uint256)
+          handler: handleDeposited
+        - event: EmergencyClaim(indexed address)
+          handler: handleEmergencyClaim
+        - event: FundsRecovered(indexed address,uint256)
+          handler: handleFundsRecovered
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: PoolUnsubscribed(indexed address,uint256,uint8,uint256,uint256,uint256)
+          handler: handlePoolUnsubscribed
+        - event: RewardRateUpdated(uint8,uint256,uint256)
+          handler: handleRewardRateUpdated
+        - event: RewardsClaimed(indexed address,uint8,uint256,uint256,uint256,uint256)
+          handler: handleRewardsClaimed
+      file: USDs_USDC_Dynamic_Farm/USDs_USDC_Dynamic_Farm.wasm
+  - kind: ethereum
     name: NonFungiblePositionManager
     network: arbitrum-one
     source:
@@ -78,3 +128,53 @@ dataSources:
           handler: handleDecreaseLiquidity
         - event: IncreaseLiquidity(indexed uint256,uint128,uint256,uint256)
           handler: handleIncreaseLiquidity
+  - kind: ethereum
+    name: l2daoUsdsFarm
+    network: arbitrum-one
+    source:
+      address: "0x39Eb38cf2cC8b4Ff77817e2Ada6bA64e40a4d8Ea"
+      startBlock: 20982396
+      abi: l2daoUsdsFarm
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - CooldownInitiated
+        - CooldownPeriodUpdated
+        - DepositPaused
+        - DepositWithdrawn
+        - Deposited
+        - EmergencyClaim
+        - FundsRecovered
+        - OwnershipTransferred
+        - PoolUnsubscribed
+        - RewardRateUpdated
+        - RewardsClaimed
+      abis:
+        - name: l2daoUsdsFarm
+          file: l2daoUsdsFarm/abis/l2daoUsdsFarm.json
+      eventHandlers:
+        - event: CooldownInitiated(indexed address,uint256,uint256)
+          handler: handleCooldownInitiated
+        - event: CooldownPeriodUpdated(uint256,uint256)
+          handler: handleCooldownPeriodUpdated
+        - event: DepositPaused(bool)
+          handler: handleDepositPaused
+        - event: DepositWithdrawn(indexed address,uint256,uint256,uint256,uint256,uint256[])
+          handler: handleDepositWithdrawn
+        - event: Deposited(indexed address,bool,uint256,uint256)
+          handler: handleDeposited
+        - event: EmergencyClaim(indexed address)
+          handler: handleEmergencyClaim
+        - event: FundsRecovered(indexed address,address,uint256)
+          handler: handleFundsRecovered
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: PoolUnsubscribed(indexed address,uint8,uint256,uint256,uint256,uint256[])
+          handler: handlePoolUnsubscribed
+        - event: RewardRateUpdated(address,uint256[],uint256[])
+          handler: handleRewardRateUpdated
+        - event: RewardsClaimed(indexed address,uint8,uint256,uint256,uint256,uint256[])
+          handler: handleRewardsClaimed
+      file: l2daoUsdsFarm/l2daoUsdsFarm.wasm

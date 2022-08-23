@@ -42,7 +42,7 @@ export function handleDeposited(event: Deposited): void {
       .concat(event.params.tokenId.toString())
   );
   let liquidity = new spausds3uniswapV3TokenLiquidity(event.params.tokenId.toString());
-  entity.liquidity = liquidity.id;
+  entity.tokens = liquidity.id;
 
   let unique = new spausds3uniqueDeposit(event.params.account.toString());
 

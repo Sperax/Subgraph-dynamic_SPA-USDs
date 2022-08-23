@@ -42,7 +42,7 @@ export function handleDeposited(event: Deposited): void {
       .concat(event.params.tokenId.toString())
   );
   let liquidity = new usdsusdc3uniswapV3TokenLiquidity(event.params.tokenId.toString());
-  entity.liquidity = liquidity.id;
+  entity.tokens = liquidity.id;
 
   let unique = new usdsusdc3uniqueDeposit(event.params.account.toString());
 
@@ -131,7 +131,6 @@ export function handleRewardsClaimed(event: RewardsClaimed): void {
   entity.gasPrice = event.transaction.gasPrice;
   entity.gasUsed = event.block.gasUsed;
 
-  // Entities can be written to the store with `.save()`
   entity.save();
 }
 export function handleCooldownInitiated(event: CooldownInitiated): void {

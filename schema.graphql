@@ -2,7 +2,7 @@
 type spausds3deposit @entity {
   id: ID!
   account: Bytes! # address
-  liquidity: spausds3uniswapV3TokenLiquidity
+  tokens: spausds3uniswapV3TokenLiquidity
   amount: BigDecimal! # uint256
   tokenId: BigInt! # uint256
   locked: Boolean! # uint256
@@ -35,7 +35,7 @@ type spausds3withdraw @entity {
 type spausds3uniqueDeposit @entity {
   id: ID!
   account: Bytes! # address
-  liquidity: spausds3uniswapV3TokenLiquidity
+  tokens: spausds3uniswapV3TokenLiquidity
   amount: BigDecimal! # uint256
   tokenId: BigInt! # uint256
   locked: Boolean! # uint256
@@ -147,7 +147,7 @@ type spausds3RewardRateUpdate @entity {
 type usdsusdc3deposit @entity {
   id: ID!
   account: Bytes! # address
-  liquidity: usdsusdc3uniswapV3TokenLiquidity
+  tokens: usdsusdc3uniswapV3TokenLiquidity
   amount: BigDecimal! # uint256
   tokenId: BigInt! # uint256
   locked: Boolean! # uint256
@@ -180,7 +180,7 @@ type usdsusdc3withdraw @entity {
 type usdsusdc3uniqueDeposit @entity {
   id: ID!
   account: Bytes! # address
-  liquidity: usdsusdc3uniswapV3TokenLiquidity
+  tokens: usdsusdc3uniswapV3TokenLiquidity
   amount: BigDecimal! # uint256
   tokenId: BigInt! # uint256
   locked: Boolean! # uint256
@@ -288,6 +288,136 @@ type usdsusdc3RewardRateUpdate @entity {
   blockNumber: BigInt!
   transactionHash: Bytes!
 }
+#-----------------------L2DAO-USDs-DYNAMIC-FARM-1ST-LAUNCH------------------------------------------------------
+type l2daoUsds1deposit @entity {
+  id: ID!
+  account: Bytes! # address
+  tokens:l2daoUsds1uniswapV3TokenLiquidity
+  liquidity: BigDecimal! # uint256
+  tokenId: BigInt! # uint256
+  locked: Boolean! # uint256
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type l2daoUsds1withdraw @entity {
+  id: ID!
+  account: Bytes!
+  tokenId: BigInt!
+  collected: l2daoUsds1uniswapV3TokenCollected
+  removed: l2daoUsds1uniswapV3TokenRemoved
+  startTimeUnix: BigInt!
+  startTime: String!
+  endTimeUnix: BigInt!
+  endTime: String!
+  l2daoRewardsClaimed: BigDecimal!
+  spaRewardsClaimed:BigDecimal!
+  liquidity: BigDecimal!
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+
+type l2daoUsds1InititateCooldown @entity {
+  id: ID!
+  account: Bytes! # address
+  expiryDateUnix: String!
+  expiryDate: BigInt! # uint256
+  tokenId: BigInt! # uint256
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type l2daoUsds1PeriodCoolDownUpdate @entity {
+  id: ID!
+  oldPeriod: BigInt!
+  newPeriod: BigInt!
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type l2daoUsds1DepositPause @entity {
+  id: ID!
+  paused: Boolean!
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type l2daoUsds1ClaimReward @entity {
+  id: ID!
+  account: Bytes!
+  l2daoRewardAmount: BigDecimal!
+  spaRewardAmount: BigDecimal!
+  fundId: BigInt!
+  fundLiquidity: BigDecimal!
+  liquidity: BigDecimal!
+  tokenId: BigInt!
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type l2daoUsds1unsubscribePool @entity {
+  id: ID!
+  account: Bytes!
+  depositId: BigInt!
+  totalL2daoRewardsClaimed: BigDecimal!
+  totalSpaRewardsClaimed: BigDecimal!
+  fundId: BigInt!
+  endTimeUnix: BigInt!
+  endTime: String!
+  startTimeUnix: BigInt!
+  startTime: String!
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type l2daoUsds1RewardRateUpdate @entity {
+  id: ID!
+  rewardToken: Bytes!
+  oldL2daoRewardRate: BigDecimal!
+  oldSpaRewardRate: BigDecimal!
+  newL2daoRewardRate: BigDecimal!
+  newSpaRewardRate: BigDecimal!
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type l2daoUsds1RecoveredFund @entity {
+  id: ID!
+  rewardToken: Bytes!
+  account: Bytes!
+  amount: BigDecimal!
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
 #-----------------------UNISWAP-V3-EVENTS---------------------------------------------------------
 type spausds3uniswapV3TokenLiquidity @entity {
   id: ID!
@@ -333,6 +463,31 @@ type usdsusdc3uniswapV3TokenCollected @entity {
 type usdsusdc3uniswapV3TokenRemoved @entity {
   id: ID!
   USDC: BigDecimal!
+  USDs: BigDecimal!
+  liquidity: BigDecimal!
+  tokenId: String!
+  fee: BigInt!
+}
+#----------------------L2DAO-USDs-UNISWAP-V3-EVENTS---------------------------------------------------------
+type l2daoUsds1uniswapV3TokenLiquidity @entity {
+  id: ID!
+  l2DAO: BigDecimal!
+  USDs: BigDecimal!
+  liquidity: BigDecimal!
+  tokenId: String!
+  fee: BigInt!
+}
+type l2daoUsds1uniswapV3TokenCollected @entity {
+  id: ID!
+  l2DAO: BigDecimal!
+  recipient: Bytes!
+  USDs: BigDecimal!
+  tokenId: String!
+  fee: BigInt!
+}
+type l2daoUsds1uniswapV3TokenRemoved @entity {
+  id: ID!
+  L2DAO: BigDecimal!
   USDs: BigDecimal!
   liquidity: BigDecimal!
   tokenId: String!
