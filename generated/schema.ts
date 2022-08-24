@@ -4240,6 +4240,8 @@ export class l2daoUsds1RewardRateUpdate extends Entity {
 
     this.set("rewardToken", Value.fromBytes(Bytes.empty()));
     this.set("oldL2daoRewardRate", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("oldRewardRate", Value.fromBigIntArray(new Array(0)));
+    this.set("newRewardRate", Value.fromBigIntArray(new Array(0)));
     this.set("oldSpaRewardRate", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("newL2daoRewardRate", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("newSpaRewardRate", Value.fromBigDecimal(BigDecimal.zero()));
@@ -4298,6 +4300,24 @@ export class l2daoUsds1RewardRateUpdate extends Entity {
 
   set oldL2daoRewardRate(value: BigDecimal) {
     this.set("oldL2daoRewardRate", Value.fromBigDecimal(value));
+  }
+
+  get oldRewardRate(): Array<BigInt> {
+    let value = this.get("oldRewardRate");
+    return value!.toBigIntArray();
+  }
+
+  set oldRewardRate(value: Array<BigInt>) {
+    this.set("oldRewardRate", Value.fromBigIntArray(value));
+  }
+
+  get newRewardRate(): Array<BigInt> {
+    let value = this.get("newRewardRate");
+    return value!.toBigIntArray();
+  }
+
+  set newRewardRate(value: Array<BigInt>) {
+    this.set("newRewardRate", Value.fromBigIntArray(value));
   }
 
   get oldSpaRewardRate(): BigDecimal {

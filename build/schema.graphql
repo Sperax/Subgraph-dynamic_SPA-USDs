@@ -396,6 +396,8 @@ type l2daoUsds1RewardRateUpdate @entity {
   id: ID!
   rewardToken: Bytes!
   oldL2daoRewardRate: BigDecimal!
+  oldRewardRate:[BigInt!]!
+  newRewardRate:[BigInt!]!
   oldSpaRewardRate: BigDecimal!
   newL2daoRewardRate: BigDecimal!
   newSpaRewardRate: BigDecimal!

@@ -199,10 +199,13 @@ export function handlePoolUnsubscribed(event: PoolUnsubscribed): void {
 export function handleRewardRateUpdated(event: RewardRateUpdated): void {
   let entity = new l2daoUsds1RewardRateUpdate(event.transaction.from.toHex());
   entity.rewardToken = event.params.rewardToken;
-  entity.newL2daoRewardRate = digitsConvert(event.params.newRewardRate[0]);
-  entity.newSpaRewardRate = digitsConvert(event.params.newRewardRate[1]);
-  entity.oldL2daoRewardRate = digitsConvert(event.params.oldRewardRate[0]);
-  entity.oldSpaRewardRate = digitsConvert(event.params.oldRewardRate[1]);
+
+  // entity.newL2daoRewardRate = digitsConvert(event.params.newRewardRate[1]);
+  // entity.newSpaRewardRate = digitsConvert(event.params.newRewardRate[2]);
+  // entity.oldL2daoRewardRate = digitsConvert(event.params.oldRewardRate[1]);
+  // entity.oldSpaRewardRate = digitsConvert(event.params.oldRewardRate[2]);
+  entity.oldRewardRate=event.params.oldRewardRate
+  entity.newRewardRate=event.params.newRewardRate
   entity.timeStamp = timestampConvertDateTime(event.block.timestamp);
   entity.timeStampUnix = event.block.timestamp;
   entity.blockNumber = event.block.number;
