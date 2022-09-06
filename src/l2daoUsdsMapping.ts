@@ -1,4 +1,4 @@
-import { BigInt } from "@graphprotocol/graph-ts";
+import { BigInt,BigDecimal,Address,log } from "@graphprotocol/graph-ts";
 import {
   l2daoUsdsFarm,
   CooldownInitiated,
@@ -31,6 +31,7 @@ import {
   l2daoUsds1RewardRateUpdate,
   l2daoUsds1withdraw,
   l2daoUsds1RecoveredFund,
+  l2daoUsds1RewardBalance,
 } from "../generated/schema";
 
 export function handleDeposited(event: Deposited): void {
@@ -40,9 +41,34 @@ export function handleDeposited(event: Deposited): void {
       .concat("_")
       .concat(event.params.tokenId.toString())
   );
+
   let liquidity = new l2daoUsds1uniswapV3TokenLiquidity(
     event.params.tokenId.toString()
   );
+  let rewardsBalance = new l2daoUsds1RewardBalance(
+    event.transaction.from
+      .toHex());
+  let contract = l2daoUsdsFarm.bind(event.address);
+  let l2daoReward = contract.try_getRewardBalance(Address.fromString("0x2cab3abfc1670d1a452df502e216a66883cdf079"));
+  if (l2daoReward.reverted) {
+    log.info("balance reverted", []);
+  } else {
+    rewardsBalance.L2DAORewardBalance= digitsConvert(l2daoReward.value)
+  }
+
+  let spaReward = contract.try_getRewardBalance(Address.fromString("0x5575552988A3A80504bBaeB1311674fCFd40aD4B"));
+  if (spaReward.reverted) {
+    log.info("balance reverted", []);
+  } else {
+    rewardsBalance.SPARewardBalance= digitsConvert(spaReward.value)
+  }
+
+  rewardsBalance.timeStamp = timestampConvertDateTime(event.block.timestamp);
+  rewardsBalance.timeStampUnix = event.block.timestamp;
+  rewardsBalance.blockNumber = event.block.number;
+  rewardsBalance.transactionHash = event.transaction.hash;
+  rewardsBalance.save();
+
   entity.tokens = liquidity.id;
   entity.account = event.params.account;
   entity.tokenId = event.params.tokenId;
@@ -72,6 +98,29 @@ export function handleDepositWithdrawn(event: DepositWithdrawn): void {
   let decreased = new l2daoUsds1uniswapV3TokenRemoved(
     event.params.tokenId.toString()
   );
+  let rewardsBalance = new l2daoUsds1RewardBalance(
+    event.transaction.from
+      .toHex());
+  let contract = l2daoUsdsFarm.bind(event.address);
+  let l2daoReward = contract.try_getRewardBalance(Address.fromString("0x2cab3abfc1670d1a452df502e216a66883cdf079"));
+  if (l2daoReward.reverted) {
+    log.info("balance reverted", []);
+  } else {
+    rewardsBalance.L2DAORewardBalance= digitsConvert(l2daoReward.value)
+  }
+
+  let spaReward = contract.try_getRewardBalance(Address.fromString("0x5575552988A3A80504bBaeB1311674fCFd40aD4B"));
+  if (spaReward.reverted) {
+    log.info("balance reverted", []);
+  } else {
+    rewardsBalance.SPARewardBalance= digitsConvert(spaReward.value)
+  }
+
+  rewardsBalance.timeStamp = timestampConvertDateTime(event.block.timestamp);
+  rewardsBalance.timeStampUnix = event.block.timestamp;
+  rewardsBalance.blockNumber = event.block.number;
+  rewardsBalance.transactionHash = event.transaction.hash;
+  rewardsBalance.save();
 
   entity.removed = decreased.id;
   entity.account = event.params.account;
@@ -222,6 +271,29 @@ export function handleRewardsClaimed(event: RewardsClaimed): void {
       .concat("_")
       .concat(event.params.tokenId.toString())
   );
+  let rewardsBalance = new l2daoUsds1RewardBalance(
+    event.transaction.from
+      .toHex());
+  let contract = l2daoUsdsFarm.bind(event.address);
+  let l2daoReward = contract.try_getRewardBalance(Address.fromString("0x2cab3abfc1670d1a452df502e216a66883cdf079"));
+  if (l2daoReward.reverted) {
+    log.info("balance reverted", []);
+  } else {
+    rewardsBalance.L2DAORewardBalance= digitsConvert(l2daoReward.value)
+  }
+
+  let spaReward = contract.try_getRewardBalance(Address.fromString("0x5575552988A3A80504bBaeB1311674fCFd40aD4B"));
+  if (spaReward.reverted) {
+    log.info("balance reverted", []);
+  } else {
+    rewardsBalance.SPARewardBalance= digitsConvert(spaReward.value)
+  }
+
+  rewardsBalance.timeStamp = timestampConvertDateTime(event.block.timestamp);
+  rewardsBalance.timeStampUnix = event.block.timestamp;
+  rewardsBalance.blockNumber = event.block.number;
+  rewardsBalance.transactionHash = event.transaction.hash;
+  rewardsBalance.save();
   entity.account = event.params.account;
   entity.fundId = BigInt.fromI32(event.params.fundId);
   entity.fundLiquidity = digitsConvert(event.params.fundLiquidity);

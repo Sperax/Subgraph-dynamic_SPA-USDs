@@ -420,6 +420,47 @@ type l2daoUsds1RecoveredFund @entity {
   blockNumber: BigInt!
   transactionHash: Bytes!
 }
+type l2daoUsds1PoolUSDsBalance @entity {
+  id: ID!
+  USDsBalance:BigDecimal!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type l2daoUsds1PoolL2DAOBalance @entity {
+  id: ID!
+  L2DAOBalance:BigDecimal!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type l2daoUsds1PoolUSDsBalanceDate @entity {
+  id: ID!
+  USDsBalance:BigDecimal!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type l2daoUsds1PoolL2DAOBalanceDate @entity {
+  id: ID!
+  L2DAOBalance:BigDecimal!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type l2daoUsds1RewardBalance @entity {
+  id: ID!
+  L2DAORewardBalance:BigDecimal!
+  SPARewardBalance:BigDecimal!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
 #-----------------------UNISWAP-V3-EVENTS---------------------------------------------------------
 type spausds3uniswapV3TokenLiquidity @entity {
   id: ID!
@@ -478,6 +519,8 @@ type l2daoUsds1uniswapV3TokenLiquidity @entity {
   liquidity: BigDecimal!
   tokenId: String!
   fee: BigInt!
+  L2DAOOwed:BigDecimal!
+  USDsOwed:BigDecimal!
 }
 type l2daoUsds1uniswapV3TokenCollected @entity {
   id: ID!
@@ -486,6 +529,8 @@ type l2daoUsds1uniswapV3TokenCollected @entity {
   USDs: BigDecimal!
   tokenId: String!
   fee: BigInt!
+  L2DAOOwed:BigDecimal!
+  USDsOwed:BigDecimal!
 }
 type l2daoUsds1uniswapV3TokenRemoved @entity {
   id: ID!
@@ -494,4 +539,6 @@ type l2daoUsds1uniswapV3TokenRemoved @entity {
   liquidity: BigDecimal!
   tokenId: String!
   fee: BigInt!
+  L2DAOOwed:BigDecimal!
+  USDsOwed:BigDecimal!
 }

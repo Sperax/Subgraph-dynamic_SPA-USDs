@@ -4531,6 +4531,461 @@ export class l2daoUsds1RecoveredFund extends Entity {
   }
 }
 
+export class l2daoUsds1PoolUSDsBalance extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("USDsBalance", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("timeStamp", Value.fromString(""));
+    this.set("timeStampUnix", Value.fromBigInt(BigInt.zero()));
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("transactionHash", Value.fromBytes(Bytes.empty()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(
+      id != null,
+      "Cannot save l2daoUsds1PoolUSDsBalance entity without an ID"
+    );
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save l2daoUsds1PoolUSDsBalance entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("l2daoUsds1PoolUSDsBalance", id.toString(), this);
+    }
+  }
+
+  static load(id: string): l2daoUsds1PoolUSDsBalance | null {
+    return changetype<l2daoUsds1PoolUSDsBalance | null>(
+      store.get("l2daoUsds1PoolUSDsBalance", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get USDsBalance(): BigDecimal {
+    let value = this.get("USDsBalance");
+    return value!.toBigDecimal();
+  }
+
+  set USDsBalance(value: BigDecimal) {
+    this.set("USDsBalance", Value.fromBigDecimal(value));
+  }
+
+  get timeStamp(): string {
+    let value = this.get("timeStamp");
+    return value!.toString();
+  }
+
+  set timeStamp(value: string) {
+    this.set("timeStamp", Value.fromString(value));
+  }
+
+  get timeStampUnix(): BigInt {
+    let value = this.get("timeStampUnix");
+    return value!.toBigInt();
+  }
+
+  set timeStampUnix(value: BigInt) {
+    this.set("timeStampUnix", Value.fromBigInt(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get transactionHash(): Bytes {
+    let value = this.get("transactionHash");
+    return value!.toBytes();
+  }
+
+  set transactionHash(value: Bytes) {
+    this.set("transactionHash", Value.fromBytes(value));
+  }
+}
+
+export class l2daoUsds1PoolL2DAOBalance extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("L2DAOBalance", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("timeStamp", Value.fromString(""));
+    this.set("timeStampUnix", Value.fromBigInt(BigInt.zero()));
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("transactionHash", Value.fromBytes(Bytes.empty()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(
+      id != null,
+      "Cannot save l2daoUsds1PoolL2DAOBalance entity without an ID"
+    );
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save l2daoUsds1PoolL2DAOBalance entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("l2daoUsds1PoolL2DAOBalance", id.toString(), this);
+    }
+  }
+
+  static load(id: string): l2daoUsds1PoolL2DAOBalance | null {
+    return changetype<l2daoUsds1PoolL2DAOBalance | null>(
+      store.get("l2daoUsds1PoolL2DAOBalance", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get L2DAOBalance(): BigDecimal {
+    let value = this.get("L2DAOBalance");
+    return value!.toBigDecimal();
+  }
+
+  set L2DAOBalance(value: BigDecimal) {
+    this.set("L2DAOBalance", Value.fromBigDecimal(value));
+  }
+
+  get timeStamp(): string {
+    let value = this.get("timeStamp");
+    return value!.toString();
+  }
+
+  set timeStamp(value: string) {
+    this.set("timeStamp", Value.fromString(value));
+  }
+
+  get timeStampUnix(): BigInt {
+    let value = this.get("timeStampUnix");
+    return value!.toBigInt();
+  }
+
+  set timeStampUnix(value: BigInt) {
+    this.set("timeStampUnix", Value.fromBigInt(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get transactionHash(): Bytes {
+    let value = this.get("transactionHash");
+    return value!.toBytes();
+  }
+
+  set transactionHash(value: Bytes) {
+    this.set("transactionHash", Value.fromBytes(value));
+  }
+}
+
+export class l2daoUsds1PoolUSDsBalanceDate extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("USDsBalance", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("timeStamp", Value.fromString(""));
+    this.set("timeStampUnix", Value.fromBigInt(BigInt.zero()));
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("transactionHash", Value.fromBytes(Bytes.empty()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(
+      id != null,
+      "Cannot save l2daoUsds1PoolUSDsBalanceDate entity without an ID"
+    );
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save l2daoUsds1PoolUSDsBalanceDate entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("l2daoUsds1PoolUSDsBalanceDate", id.toString(), this);
+    }
+  }
+
+  static load(id: string): l2daoUsds1PoolUSDsBalanceDate | null {
+    return changetype<l2daoUsds1PoolUSDsBalanceDate | null>(
+      store.get("l2daoUsds1PoolUSDsBalanceDate", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get USDsBalance(): BigDecimal {
+    let value = this.get("USDsBalance");
+    return value!.toBigDecimal();
+  }
+
+  set USDsBalance(value: BigDecimal) {
+    this.set("USDsBalance", Value.fromBigDecimal(value));
+  }
+
+  get timeStamp(): string {
+    let value = this.get("timeStamp");
+    return value!.toString();
+  }
+
+  set timeStamp(value: string) {
+    this.set("timeStamp", Value.fromString(value));
+  }
+
+  get timeStampUnix(): BigInt {
+    let value = this.get("timeStampUnix");
+    return value!.toBigInt();
+  }
+
+  set timeStampUnix(value: BigInt) {
+    this.set("timeStampUnix", Value.fromBigInt(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get transactionHash(): Bytes {
+    let value = this.get("transactionHash");
+    return value!.toBytes();
+  }
+
+  set transactionHash(value: Bytes) {
+    this.set("transactionHash", Value.fromBytes(value));
+  }
+}
+
+export class l2daoUsds1PoolL2DAOBalanceDate extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("L2DAOBalance", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("timeStamp", Value.fromString(""));
+    this.set("timeStampUnix", Value.fromBigInt(BigInt.zero()));
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("transactionHash", Value.fromBytes(Bytes.empty()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(
+      id != null,
+      "Cannot save l2daoUsds1PoolL2DAOBalanceDate entity without an ID"
+    );
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save l2daoUsds1PoolL2DAOBalanceDate entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("l2daoUsds1PoolL2DAOBalanceDate", id.toString(), this);
+    }
+  }
+
+  static load(id: string): l2daoUsds1PoolL2DAOBalanceDate | null {
+    return changetype<l2daoUsds1PoolL2DAOBalanceDate | null>(
+      store.get("l2daoUsds1PoolL2DAOBalanceDate", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get L2DAOBalance(): BigDecimal {
+    let value = this.get("L2DAOBalance");
+    return value!.toBigDecimal();
+  }
+
+  set L2DAOBalance(value: BigDecimal) {
+    this.set("L2DAOBalance", Value.fromBigDecimal(value));
+  }
+
+  get timeStamp(): string {
+    let value = this.get("timeStamp");
+    return value!.toString();
+  }
+
+  set timeStamp(value: string) {
+    this.set("timeStamp", Value.fromString(value));
+  }
+
+  get timeStampUnix(): BigInt {
+    let value = this.get("timeStampUnix");
+    return value!.toBigInt();
+  }
+
+  set timeStampUnix(value: BigInt) {
+    this.set("timeStampUnix", Value.fromBigInt(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get transactionHash(): Bytes {
+    let value = this.get("transactionHash");
+    return value!.toBytes();
+  }
+
+  set transactionHash(value: Bytes) {
+    this.set("transactionHash", Value.fromBytes(value));
+  }
+}
+
+export class l2daoUsds1RewardBalance extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("L2DAORewardBalance", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("SPARewardBalance", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("timeStamp", Value.fromString(""));
+    this.set("timeStampUnix", Value.fromBigInt(BigInt.zero()));
+    this.set("blockNumber", Value.fromBigInt(BigInt.zero()));
+    this.set("transactionHash", Value.fromBytes(Bytes.empty()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(
+      id != null,
+      "Cannot save l2daoUsds1RewardBalance entity without an ID"
+    );
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save l2daoUsds1RewardBalance entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("l2daoUsds1RewardBalance", id.toString(), this);
+    }
+  }
+
+  static load(id: string): l2daoUsds1RewardBalance | null {
+    return changetype<l2daoUsds1RewardBalance | null>(
+      store.get("l2daoUsds1RewardBalance", id)
+    );
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get L2DAORewardBalance(): BigDecimal {
+    let value = this.get("L2DAORewardBalance");
+    return value!.toBigDecimal();
+  }
+
+  set L2DAORewardBalance(value: BigDecimal) {
+    this.set("L2DAORewardBalance", Value.fromBigDecimal(value));
+  }
+
+  get SPARewardBalance(): BigDecimal {
+    let value = this.get("SPARewardBalance");
+    return value!.toBigDecimal();
+  }
+
+  set SPARewardBalance(value: BigDecimal) {
+    this.set("SPARewardBalance", Value.fromBigDecimal(value));
+  }
+
+  get timeStamp(): string {
+    let value = this.get("timeStamp");
+    return value!.toString();
+  }
+
+  set timeStamp(value: string) {
+    this.set("timeStamp", Value.fromString(value));
+  }
+
+  get timeStampUnix(): BigInt {
+    let value = this.get("timeStampUnix");
+    return value!.toBigInt();
+  }
+
+  set timeStampUnix(value: BigInt) {
+    this.set("timeStampUnix", Value.fromBigInt(value));
+  }
+
+  get blockNumber(): BigInt {
+    let value = this.get("blockNumber");
+    return value!.toBigInt();
+  }
+
+  set blockNumber(value: BigInt) {
+    this.set("blockNumber", Value.fromBigInt(value));
+  }
+
+  get transactionHash(): Bytes {
+    let value = this.get("transactionHash");
+    return value!.toBytes();
+  }
+
+  set transactionHash(value: Bytes) {
+    this.set("transactionHash", Value.fromBytes(value));
+  }
+}
+
 export class spausds3uniswapV3TokenLiquidity extends Entity {
   constructor(id: string) {
     super();
@@ -5075,6 +5530,8 @@ export class l2daoUsds1uniswapV3TokenLiquidity extends Entity {
     this.set("liquidity", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("tokenId", Value.fromString(""));
     this.set("fee", Value.fromBigInt(BigInt.zero()));
+    this.set("L2DAOOwed", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("USDsOwed", Value.fromBigDecimal(BigDecimal.zero()));
   }
 
   save(): void {
@@ -5152,6 +5609,24 @@ export class l2daoUsds1uniswapV3TokenLiquidity extends Entity {
   set fee(value: BigInt) {
     this.set("fee", Value.fromBigInt(value));
   }
+
+  get L2DAOOwed(): BigDecimal {
+    let value = this.get("L2DAOOwed");
+    return value!.toBigDecimal();
+  }
+
+  set L2DAOOwed(value: BigDecimal) {
+    this.set("L2DAOOwed", Value.fromBigDecimal(value));
+  }
+
+  get USDsOwed(): BigDecimal {
+    let value = this.get("USDsOwed");
+    return value!.toBigDecimal();
+  }
+
+  set USDsOwed(value: BigDecimal) {
+    this.set("USDsOwed", Value.fromBigDecimal(value));
+  }
 }
 
 export class l2daoUsds1uniswapV3TokenCollected extends Entity {
@@ -5164,6 +5639,8 @@ export class l2daoUsds1uniswapV3TokenCollected extends Entity {
     this.set("USDs", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("tokenId", Value.fromString(""));
     this.set("fee", Value.fromBigInt(BigInt.zero()));
+    this.set("L2DAOOwed", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("USDsOwed", Value.fromBigDecimal(BigDecimal.zero()));
   }
 
   save(): void {
@@ -5241,6 +5718,24 @@ export class l2daoUsds1uniswapV3TokenCollected extends Entity {
   set fee(value: BigInt) {
     this.set("fee", Value.fromBigInt(value));
   }
+
+  get L2DAOOwed(): BigDecimal {
+    let value = this.get("L2DAOOwed");
+    return value!.toBigDecimal();
+  }
+
+  set L2DAOOwed(value: BigDecimal) {
+    this.set("L2DAOOwed", Value.fromBigDecimal(value));
+  }
+
+  get USDsOwed(): BigDecimal {
+    let value = this.get("USDsOwed");
+    return value!.toBigDecimal();
+  }
+
+  set USDsOwed(value: BigDecimal) {
+    this.set("USDsOwed", Value.fromBigDecimal(value));
+  }
 }
 
 export class l2daoUsds1uniswapV3TokenRemoved extends Entity {
@@ -5253,6 +5748,8 @@ export class l2daoUsds1uniswapV3TokenRemoved extends Entity {
     this.set("liquidity", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("tokenId", Value.fromString(""));
     this.set("fee", Value.fromBigInt(BigInt.zero()));
+    this.set("L2DAOOwed", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("USDsOwed", Value.fromBigDecimal(BigDecimal.zero()));
   }
 
   save(): void {
@@ -5329,5 +5826,23 @@ export class l2daoUsds1uniswapV3TokenRemoved extends Entity {
 
   set fee(value: BigInt) {
     this.set("fee", Value.fromBigInt(value));
+  }
+
+  get L2DAOOwed(): BigDecimal {
+    let value = this.get("L2DAOOwed");
+    return value!.toBigDecimal();
+  }
+
+  set L2DAOOwed(value: BigDecimal) {
+    this.set("L2DAOOwed", Value.fromBigDecimal(value));
+  }
+
+  get USDsOwed(): BigDecimal {
+    let value = this.get("USDsOwed");
+    return value!.toBigDecimal();
+  }
+
+  set USDsOwed(value: BigDecimal) {
+    this.set("USDsOwed", Value.fromBigDecimal(value));
   }
 }

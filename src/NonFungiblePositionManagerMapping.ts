@@ -55,6 +55,8 @@ export function handleCollect(event: Collect): void {
     collectspausds3.fee = BigInt.fromI32(lpPosition.value.value4);
     collectusdsusdc3.fee = BigInt.fromI32(lpPosition.value.value4);
     collectl2daoUsds1.fee = BigInt.fromI32(lpPosition.value.value4);
+    collectl2daoUsds1.L2DAOOwed = digitsConvert(lpPosition.value.value10);
+    collectl2daoUsds1.USDsOwed = digitsConvert(lpPosition.value.value11);
   }
 
   collectspausds3.save();
@@ -95,6 +97,8 @@ export function handleDecreaseLiquidity(event: DecreaseLiquidity): void {
     decreasespausds3.fee = BigInt.fromI32(lpPosition.value.value4);
     decreaseusdsusdc3.fee = BigInt.fromI32(lpPosition.value.value4);
     decreasel2daoUsds1.fee = BigInt.fromI32(lpPosition.value.value4);
+    decreasel2daoUsds1.L2DAOOwed = digitsConvert(lpPosition.value.value10);
+    decreasel2daoUsds1.USDsOwed = digitsConvert(lpPosition.value.value11);
   }
 
   decreasespausds3.save();
@@ -118,8 +122,8 @@ export function handleIncreaseLiquidity(event: IncreaseLiquidity): void {
 
   increaseusdsusdc3.tokenId = event.params.tokenId.toString();
   increaseusdsusdc3.liquidity = digitsConvert(event.params.liquidity);
-  increaseusdsusdc3.USDC = collateralConvert(event.params.amount0);
-  increaseusdsusdc3.USDs = digitsConvert(event.params.amount1);
+  increaseusdsusdc3.USDC = collateralConvert(event.params.amount1);
+  increaseusdsusdc3.USDs = digitsConvert(event.params.amount0);
 
   increasel2daoUsds1.tokenId = event.params.tokenId.toString();
   increasel2daoUsds1.liquidity = digitsConvert(event.params.liquidity);
@@ -134,6 +138,9 @@ export function handleIncreaseLiquidity(event: IncreaseLiquidity): void {
     increasespausds3.fee = BigInt.fromI32(lpPosition.value.value4);
     increaseusdsusdc3.fee = BigInt.fromI32(lpPosition.value.value4);
     increasel2daoUsds1.fee = BigInt.fromI32(lpPosition.value.value4);
+    increasel2daoUsds1.L2DAOOwed = digitsConvert(lpPosition.value.value10);
+    increasel2daoUsds1.USDsOwed = digitsConvert(lpPosition.value.value11);
+
   }
   increasespausds3.save();
   increaseusdsusdc3.save();
