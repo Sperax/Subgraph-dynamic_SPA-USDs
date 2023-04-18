@@ -32,16 +32,17 @@ import {
   usdsusdc3withdraw,
   usdsusdc3uniqueDeposit,
   usdsusdc3uniqueWithdraw,
+  usdsusdc3EmergencyClaim,
+  usdsusdc3RecoverFund,
 } from "../generated/schema";
 
 export function handleDeposited(event: Deposited): void {
   let entity = new usdsusdc3deposit(
-    event.transaction.from
-      .toHex()
-      .concat("_")
-      .concat(event.params.tokenId.toString())
+  event.transaction.hash.toHex().concat("_").concat(event.logIndex.toString())
   );
-  let liquidity = new usdsusdc3uniswapV3TokenLiquidity(event.params.tokenId.toString());
+  let liquidity = new usdsusdc3uniswapV3TokenLiquidity(
+    event.params.tokenId.toString()
+  );
   entity.tokens = liquidity.id;
 
   let unique = new usdsusdc3uniqueDeposit(event.params.account.toString());
@@ -116,13 +117,15 @@ export function handleRewardsClaimed(event: RewardsClaimed): void {
     event.transaction.from
       .toHex()
       .concat("_")
-      .concat(event.params.tokenId.toString())
+      .concat(
+        event.params.tokenId.toString().concat(event.params.fundId.toString())
+      )
   );
   entity.account = event.params.account;
   entity.fundId = BigInt.fromI32(event.params.fundId);
-  entity.fundLiquidity = digitsConvert(event.params.fundLiquidity);
-  entity.liquidity = digitsConvert(event.params.liquidity);
-  entity.rewardAmount = digitsConvert(event.params.rewardAmount);
+  entity.fundLiquidity = event.params.fundLiquidity.toBigDecimal();
+  entity.liquidity = event.params.liquidity.toBigDecimal();
+  entity.rewardAmount = event.params.rewardAmount.toBigDecimal();
   entity.tokenId = event.params.tokenId;
   entity.timeStamp = timestampConvertDateTime(event.block.timestamp);
   entity.timeStampUnix = event.block.timestamp;
@@ -135,10 +138,7 @@ export function handleRewardsClaimed(event: RewardsClaimed): void {
 }
 export function handleCooldownInitiated(event: CooldownInitiated): void {
   let entity = new usdsusdc3InititateCooldown(
-    event.transaction.from
-      .toHex()
-      .concat("_")
-      .concat(event.params.tokenId.toString())
+  event.transaction.hash.toHex().concat("_").concat(event.logIndex.toString())
   );
 
   entity.account = event.params.account;
@@ -161,10 +161,7 @@ export function handleCooldownPeriodUpdated(
   event: CooldownPeriodUpdated
 ): void {
   let entity = new usdsusdc3PeriodCoolDownUpdate(
-    event.transaction.from
-      .toHex()
-      .concat("_")
-      .concat(event.params.oldCooldownPeriod.toString())
+ event.transaction.hash.toHex().concat("_").concat(event.logIndex.toString())
   );
 
   entity.newPeriod = event.params.newCooldownPeriod;
@@ -179,7 +176,9 @@ export function handleCooldownPeriodUpdated(
 }
 
 export function handleDepositPaused(event: DepositPaused): void {
-  let entity = new usdsusdc3DepositPause(event.transaction.from.toHex());
+  let entity = new usdsusdc3DepositPause(
+    event.transaction.hash.toHex().concat("_").concat(event.logIndex.toString())
+  );
   entity.paused = event.params.paused;
   entity.timeStamp = timestampConvertDateTime(event.block.timestamp);
   entity.timeStampUnix = event.block.timestamp;
@@ -191,19 +190,17 @@ export function handleDepositPaused(event: DepositPaused): void {
 }
 export function handleDepositWithdrawn(event: DepositWithdrawn): void {
   let entity = new usdsusdc3withdraw(
-    event.transaction.from
-      .toHex()
-      .concat("_")
-      .concat(event.params.tokenId.toString())
+  event.transaction.hash.toHex().concat("_").concat(event.logIndex.toString())
   );
-  let collected = new usdsusdc3uniswapV3TokenCollected(event.params.tokenId.toString());
+  let collected = new usdsusdc3uniswapV3TokenCollected(
+    event.params.tokenId.toString()
+  );
   entity.collected = collected.id;
-  let decreased = new usdsusdc3uniswapV3TokenRemoved(event.params.tokenId.toString());
+  let decreased = new usdsusdc3uniswapV3TokenRemoved(
+    event.params.tokenId.toString()
+  );
   let unique = new usdsusdc3uniqueWithdraw(
-    event.transaction.from
-      .toHex()
-      .concat("_")
-      .concat(event.params.tokenId.toString())
+  event.transaction.hash.toHex().concat("_").concat(event.logIndex.toString())
   );
   entity.removed = decreased.id;
   entity.account = event.params.account;
@@ -240,7 +237,9 @@ export function handleDepositWithdrawn(event: DepositWithdrawn): void {
 }
 
 export function handlePoolUnsubscribed(event: PoolUnsubscribed): void {
-  let entity = new usdsusdc3unsubscribePool(event.transaction.from.toHex());
+  let entity = new usdsusdc3unsubscribePool(
+    event.transaction.hash.toHex().concat("_").concat(event.logIndex.toString())
+  );
   entity.account = event.params.account;
   entity.depositId = event.params.depositId;
   entity.startTimeUnix = event.params.startTime;
@@ -259,7 +258,9 @@ export function handlePoolUnsubscribed(event: PoolUnsubscribed): void {
 }
 
 export function handleRewardRateUpdated(event: RewardRateUpdated): void {
-  let entity = new usdsusdc3RewardRateUpdate(event.transaction.from.toHex());
+  let entity = new usdsusdc3RewardRateUpdate(
+    event.transaction.hash.toHex().concat("_").concat(event.logIndex.toString())
+  );
   entity.fundId = BigInt.fromI32(event.params.fundId);
   entity.newRewardRate = digitsConvert(event.params.newRewardRate);
   entity.oldRewardRate = digitsConvert(event.params.oldRewardRate);
@@ -272,12 +273,34 @@ export function handleRewardRateUpdated(event: RewardRateUpdated): void {
   entity.save();
 }
 export function handleEmergencyClaim(event: EmergencyClaim): void {
-  event.params.account;
+  let entity = new usdsusdc3EmergencyClaim(
+    event.transaction.hash
+      .toHex()
+      .concat("_")
+      .concat(event.logIndex.toString())
+      .concat(event.block.number.toHex())
+  );
+  entity.account = event.params.account;
+  entity.timeStamp = timestampConvertDateTime(event.block.timestamp);
+  entity.timeStampUnix = event.block.timestamp;
+  entity.blockNumber = event.block.number;
+  entity.transactionHash = event.transaction.hash;
+
+  entity.save();
 }
 
 export function handleFundsRecovered(event: FundsRecovered): void {
-  event.params.account;
-  event.params.amount;
+  let entity = new usdsusdc3RecoverFund(
+    event.transaction.hash.toHex().concat("_").concat(event.logIndex.toString())
+  );
+  entity.amount = digitsConvert(event.params.amount);
+  entity.account = event.params.account;
+  entity.timeStamp = timestampConvertDateTime(event.block.timestamp);
+  entity.timeStampUnix = event.block.timestamp;
+  entity.blockNumber = event.block.number;
+  entity.transactionHash = event.transaction.hash;
+
+  entity.save();
 }
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {

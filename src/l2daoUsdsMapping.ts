@@ -1,4 +1,4 @@
-import { BigInt,BigDecimal,Address,log } from "@graphprotocol/graph-ts";
+import { BigInt, BigDecimal, Address, log } from "@graphprotocol/graph-ts";
 import {
   l2daoUsdsFarm,
   CooldownInitiated,
@@ -36,31 +36,32 @@ import {
 
 export function handleDeposited(event: Deposited): void {
   let entity = new l2daoUsds1deposit(
-    event.transaction.from
-      .toHex()
-      .concat("_")
-      .concat(event.params.tokenId.toString())
+    event.transaction.hash.toHex().concat("_").concat(event.logIndex.toString())
   );
 
   let liquidity = new l2daoUsds1uniswapV3TokenLiquidity(
     event.params.tokenId.toString()
   );
   let rewardsBalance = new l2daoUsds1RewardBalance(
-    event.transaction.from
-      .toHex());
+     event.transaction.hash.toHex().concat("_").concat(event.logIndex.toString())
+  );
   let contract = l2daoUsdsFarm.bind(event.address);
-  let l2daoReward = contract.try_getRewardBalance(Address.fromString("0x2cab3abfc1670d1a452df502e216a66883cdf079"));
+  let l2daoReward = contract.try_getRewardBalance(
+    Address.fromString("0x2cab3abfc1670d1a452df502e216a66883cdf079")
+  );
   if (l2daoReward.reverted) {
     log.info("balance reverted", []);
   } else {
-    rewardsBalance.L2DAORewardBalance= digitsConvert(l2daoReward.value)
+    rewardsBalance.L2DAORewardBalance = digitsConvert(l2daoReward.value);
   }
 
-  let spaReward = contract.try_getRewardBalance(Address.fromString("0x5575552988A3A80504bBaeB1311674fCFd40aD4B"));
+  let spaReward = contract.try_getRewardBalance(
+    Address.fromString("0x5575552988A3A80504bBaeB1311674fCFd40aD4B")
+  );
   if (spaReward.reverted) {
     log.info("balance reverted", []);
   } else {
-    rewardsBalance.SPARewardBalance= digitsConvert(spaReward.value)
+    rewardsBalance.SPARewardBalance = digitsConvert(spaReward.value);
   }
 
   rewardsBalance.timeStamp = timestampConvertDateTime(event.block.timestamp);
@@ -86,10 +87,7 @@ export function handleDeposited(event: Deposited): void {
 
 export function handleDepositWithdrawn(event: DepositWithdrawn): void {
   let entity = new l2daoUsds1withdraw(
-    event.transaction.from
-      .toHex()
-      .concat("_")
-      .concat(event.params.tokenId.toString())
+    event.transaction.hash.toHex().concat("_").concat(event.logIndex.toString())
   );
   let collected = new l2daoUsds1uniswapV3TokenCollected(
     event.params.tokenId.toString()
@@ -99,21 +97,25 @@ export function handleDepositWithdrawn(event: DepositWithdrawn): void {
     event.params.tokenId.toString()
   );
   let rewardsBalance = new l2daoUsds1RewardBalance(
-    event.transaction.from
-      .toHex());
+     event.transaction.hash.toHex().concat("_").concat(event.logIndex.toString())
+  );
   let contract = l2daoUsdsFarm.bind(event.address);
-  let l2daoReward = contract.try_getRewardBalance(Address.fromString("0x2cab3abfc1670d1a452df502e216a66883cdf079"));
+  let l2daoReward = contract.try_getRewardBalance(
+    Address.fromString("0x2cab3abfc1670d1a452df502e216a66883cdf079")
+  );
   if (l2daoReward.reverted) {
     log.info("balance reverted", []);
   } else {
-    rewardsBalance.L2DAORewardBalance= digitsConvert(l2daoReward.value)
+    rewardsBalance.L2DAORewardBalance = digitsConvert(l2daoReward.value);
   }
 
-  let spaReward = contract.try_getRewardBalance(Address.fromString("0x5575552988A3A80504bBaeB1311674fCFd40aD4B"));
+  let spaReward = contract.try_getRewardBalance(
+    Address.fromString("0x5575552988A3A80504bBaeB1311674fCFd40aD4B")
+  );
   if (spaReward.reverted) {
     log.info("balance reverted", []);
   } else {
-    rewardsBalance.SPARewardBalance= digitsConvert(spaReward.value)
+    rewardsBalance.SPARewardBalance = digitsConvert(spaReward.value);
   }
 
   rewardsBalance.timeStamp = timestampConvertDateTime(event.block.timestamp);
@@ -133,9 +135,7 @@ export function handleDepositWithdrawn(event: DepositWithdrawn): void {
   entity.l2daoRewardsClaimed = digitsConvert(
     event.params.totalRewardsClaimed[0]
   );
-  entity.l2daoRewardsClaimed = digitsConvert(
-    event.params.totalRewardsClaimed[1]
-  );
+  entity.spaRewardsClaimed = digitsConvert(event.params.totalRewardsClaimed[1]);
   entity.timeStamp = timestampConvertDateTime(event.block.timestamp);
   entity.timeStampUnix = event.block.timestamp;
   entity.blockNumber = event.block.number;
@@ -147,10 +147,7 @@ export function handleDepositWithdrawn(event: DepositWithdrawn): void {
 
 export function handleCooldownInitiated(event: CooldownInitiated): void {
   let entity = new l2daoUsds1InititateCooldown(
-    event.transaction.from
-      .toHex()
-      .concat("_")
-      .concat(event.params.tokenId.toString())
+    event.transaction.hash.toHex().concat("_").concat(event.logIndex.toString())
   );
 
   entity.account = event.params.account;
@@ -172,10 +169,7 @@ export function handleCooldownPeriodUpdated(
   event: CooldownPeriodUpdated
 ): void {
   let entity = new l2daoUsds1PeriodCoolDownUpdate(
-    event.transaction.from
-      .toHex()
-      .concat("_")
-      .concat(event.params.oldCooldownPeriod.toString())
+ event.transaction.hash.toHex().concat("_").concat(event.logIndex.toString())
   );
 
   entity.newPeriod = event.params.newCooldownPeriod;
@@ -190,7 +184,7 @@ export function handleCooldownPeriodUpdated(
 }
 
 export function handleDepositPaused(event: DepositPaused): void {
-  let entity = new l2daoUsds1DepositPause(event.transaction.from.toHex());
+  let entity = new l2daoUsds1DepositPause( event.transaction.hash.toHex().concat("_").concat(event.logIndex.toString()));
   entity.paused = event.params.paused;
   entity.timeStamp = timestampConvertDateTime(event.block.timestamp);
   entity.timeStampUnix = event.block.timestamp;
@@ -206,7 +200,7 @@ export function handleEmergencyClaim(event: EmergencyClaim): void {
 }
 
 export function handleFundsRecovered(event: FundsRecovered): void {
-  let entity = new l2daoUsds1RecoveredFund(event.transaction.from.toHex());
+  let entity = new l2daoUsds1RecoveredFund( event.transaction.hash.toHex().concat("_").concat(event.logIndex.toString()));
   entity.account = event.params.account;
   entity.amount = digitsConvert(event.params.amount);
   entity.rewardToken = event.params.rwdToken;
@@ -222,7 +216,7 @@ export function handleFundsRecovered(event: FundsRecovered): void {
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {}
 
 export function handlePoolUnsubscribed(event: PoolUnsubscribed): void {
-  let entity = new l2daoUsds1unsubscribePool(event.transaction.from.toHex());
+  let entity = new l2daoUsds1unsubscribePool( event.transaction.hash.toHex().concat("_").concat(event.logIndex.toString()));
   entity.account = event.params.account;
   entity.depositId = event.params.depositId;
   entity.startTimeUnix = event.params.startTime;
@@ -246,15 +240,15 @@ export function handlePoolUnsubscribed(event: PoolUnsubscribed): void {
 }
 
 export function handleRewardRateUpdated(event: RewardRateUpdated): void {
-  let entity = new l2daoUsds1RewardRateUpdate(event.transaction.from.toHex());
+  let entity = new l2daoUsds1RewardRateUpdate( event.transaction.hash.toHex().concat("_").concat(event.logIndex.toString()));
   entity.rewardToken = event.params.rewardToken;
 
   // entity.newL2daoRewardRate = digitsConvert(event.params.newRewardRate[1]);
   // entity.newSpaRewardRate = digitsConvert(event.params.newRewardRate[2]);
   // entity.oldL2daoRewardRate = digitsConvert(event.params.oldRewardRate[1]);
   // entity.oldSpaRewardRate = digitsConvert(event.params.oldRewardRate[2]);
-  entity.oldRewardRate=event.params.oldRewardRate
-  entity.newRewardRate=event.params.newRewardRate
+  entity.oldRewardRate = event.params.oldRewardRate;
+  entity.newRewardRate = event.params.newRewardRate;
   entity.timeStamp = timestampConvertDateTime(event.block.timestamp);
   entity.timeStampUnix = event.block.timestamp;
   entity.blockNumber = event.block.number;
@@ -266,27 +260,28 @@ export function handleRewardRateUpdated(event: RewardRateUpdated): void {
 
 export function handleRewardsClaimed(event: RewardsClaimed): void {
   let entity = new l2daoUsds1ClaimReward(
-    event.transaction.from
-      .toHex()
-      .concat("_")
-      .concat(event.params.tokenId.toString())
+    event.transaction.hash.toHex().concat("_").concat(event.logIndex.toString())
   );
   let rewardsBalance = new l2daoUsds1RewardBalance(
-    event.transaction.from
-      .toHex());
+     event.transaction.hash.toHex().concat("_").concat(event.logIndex.toString())
+  );
   let contract = l2daoUsdsFarm.bind(event.address);
-  let l2daoReward = contract.try_getRewardBalance(Address.fromString("0x2cab3abfc1670d1a452df502e216a66883cdf079"));
+  let l2daoReward = contract.try_getRewardBalance(
+    Address.fromString("0x2cab3abfc1670d1a452df502e216a66883cdf079")
+  );
   if (l2daoReward.reverted) {
     log.info("balance reverted", []);
   } else {
-    rewardsBalance.L2DAORewardBalance= digitsConvert(l2daoReward.value)
+    rewardsBalance.L2DAORewardBalance = digitsConvert(l2daoReward.value);
   }
 
-  let spaReward = contract.try_getRewardBalance(Address.fromString("0x5575552988A3A80504bBaeB1311674fCFd40aD4B"));
+  let spaReward = contract.try_getRewardBalance(
+    Address.fromString("0x5575552988A3A80504bBaeB1311674fCFd40aD4B")
+  );
   if (spaReward.reverted) {
     log.info("balance reverted", []);
   } else {
-    rewardsBalance.SPARewardBalance= digitsConvert(spaReward.value)
+    rewardsBalance.SPARewardBalance = digitsConvert(spaReward.value);
   }
 
   rewardsBalance.timeStamp = timestampConvertDateTime(event.block.timestamp);

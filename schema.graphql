@@ -143,6 +143,23 @@ type spausds3RewardRateUpdate @entity {
   blockNumber: BigInt!
   transactionHash: Bytes!
 }
+type spausds3EmergencyClaim @entity {
+  id: ID!
+  account:Bytes!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type spausds3RecoverFund @entity {
+  id: ID!
+  account:Bytes!
+  amount:BigDecimal!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
 #-----------------------USDS-USDC-DYNAMIC-FARM-3RD-LAUNCH------------------------------------------------------
 type usdsusdc3deposit @entity {
   id: ID!
@@ -283,6 +300,23 @@ type usdsusdc3RewardRateUpdate @entity {
   newRewardRate: BigDecimal!
   gasPrice: BigInt!
   gasUsed: BigInt!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type usdsusdc3EmergencyClaim @entity {
+  id: ID!
+  account:Bytes!
+  timeStamp: String!
+  timeStampUnix: BigInt!
+  blockNumber: BigInt!
+  transactionHash: Bytes!
+}
+type usdsusdc3RecoverFund @entity {
+  id: ID!
+  account:Bytes!
+  amount:BigDecimal!
   timeStamp: String!
   timeStampUnix: BigInt!
   blockNumber: BigInt!
